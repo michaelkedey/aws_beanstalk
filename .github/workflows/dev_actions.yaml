@@ -32,7 +32,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: pre-init file
-        run: bash ./format_validate_all.sh
+        run: ./format_validate_all.sh
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
