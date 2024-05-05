@@ -35,22 +35,11 @@ jobs:
           version-label: v-$(date +%Y-%m-%d-%H-%M-%S)
           source-bundle: s3://elasticbeanstalk-${{ env.AWS_REGION }}-${{ secrets.DEV_ACCOUNT_ID }}/app-${{ github.sha }}.zip
           region: us-east-1
-          
-      - name: Get Beanstalk Environment Name
-        uses: aws-actions/aws-cli@v2
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          region: us-east-1  # Replace with your AWS region
-          command: aws elasticbeanstalk describe-environments --output text | grep EnvironmentName: | awk '{print $2}'
-          outputs:
-            environment_name: ${{ steps.get_env_name.outputs.stdout }}
-      
-
+        
       - name: Deploy Application Version to Elastic Beanstalk
         uses: aws-actions/aws-elastic-beanstalk-deploy@v1
         with:
           application-name: LambdaWebApp2
-          environment-name: ${{ steps.get_env_name.outputs.environment_name }}
+          environment-name: my-dev-beanstalk2
           version-label: ${{ steps.create_app_version.outputs.version-label }}
           region: us-east-1
