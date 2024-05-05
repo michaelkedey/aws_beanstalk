@@ -2,13 +2,16 @@
 
 # }
 
-variable "instance_type" {
-
-}
-
 # variable "lambda_function_name" {
 
 # }
+
+# variable "s3_logs_bucket_name" {
+
+# }
+variable "instance_type" {
+
+}
 
 variable "vpc_id" {
 
@@ -118,10 +121,6 @@ variable "tier" {
   default = "WebServer"
 
 }
-
-# variable "s3_logs_bucket_name" {
-
-# }
 
 variable "elb_subnet_ids" {
 

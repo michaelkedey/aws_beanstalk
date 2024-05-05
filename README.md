@@ -22,13 +22,13 @@ This repository contains Terraform configurations to provision AWS infrastructur
 2. Clone this repository:
 
    ```bash
-   git clone <https://github.com/michaelkedey/aws_cloudfront_beanstalk_lambda_s3_config.git>
+   git clone <https://github.com/michaelkedey/aws_beanstalk.git>
    ```
 
 3. Change into the project repo:
 
    ```bash
-   cd <aws_cloudfront_beanstalk_lambda_s3_config/src/infrastracture>
+   cd <aws_beanstalk/src/infrastracture>
    ```
 
 4. Run the format script to format all Terraform files:
@@ -46,7 +46,7 @@ This repository contains Terraform configurations to provision AWS infrastructur
 7. Initialize Terraform:
 
    ```bash
-   terraform init -var-file=<"./env/**/.terraform.tfvars"> -backend-config=<"./env/**/.backend.tfvars">
+   terraform init -var-file=<"./env/**/.terraform.tfvars"> -backend-config=<"./env/**/backend.tfvars">
    ```
 
 8. Plan Terraform:
@@ -63,6 +63,13 @@ This repository contains Terraform configurations to provision AWS infrastructur
    ```
 
    Follow the prompts to confirm the changes.
+   > **Note:** it may be necesary to know you have to run thw apply command if the first one fails.
+
+10. Destroy the resources after testing:
+
+   ```bash
+   terraform destroy -var-file=<"./env/**/.terraform.tfvars"> --auto-approve
+   ```
 
 ## Infrastructure Components
 

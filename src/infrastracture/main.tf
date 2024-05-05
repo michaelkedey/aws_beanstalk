@@ -35,24 +35,7 @@ module "beanstalk" {
 
 }
 
-# permissions for beanstalk s3 bucket
-# resource "aws_s3_bucket_policy" "beanstalk_bucket_policy" {
-#   bucket = "beanstalk_bucket_name"
-
-#   policy = jsonencode({
-#     Version = "2012-10-17",
-#     Statement = [
-#       {
-#         Effect   = "Allow",
-#         Principal = "*",
-#         Action   = ["s3:GetObject", "s3:PutObject"],
-#         Resource = "arn:aws:s3:::elasticbeanstalk-${data.aws_region.current.name}-${data.aws_caller_identity.current.account_id}/*"
-#       },
-#     ],
-#   })
-# }
-
-#5 upload .net function to beanstalk bucket
+#4 upload .net function to beanstalk bucket
 module "upload_dot_net" {
   source       = "./modules/file_upload"
   file_path    = var.app_file_upload
@@ -60,7 +43,7 @@ module "upload_dot_net" {
   key          = var.app_key
 }
 
-#8 create app version from zip
+#5 create app version from zip
 module "app_version" {
   source           = "./modules/app_version"
   application      = module.dotnet_app.app_name

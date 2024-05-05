@@ -1,9 +1,3 @@
-#get the aws current region
-data "aws_region" "current" {}
-
-#get the aws account id
-data "aws_caller_identity" "current" {}
-
 # IAM Role for EC2 Instances
 resource "aws_iam_role" "beanstalk_ec2_role" {
   name = "beanstalk_ec2_role-2"
@@ -59,18 +53,12 @@ resource "aws_iam_policy" "beanstalk-service-policy" {
 resource "aws_iam_role_policy_attachment" "beanstalk_ec2_policy_attachment" {
   role       = aws_iam_role.beanstalk_ec2_role.name
   policy_arn = aws_iam_policy.beanstalk_ec2_policy.arn
-  #policy_arn = "arn:aws:iam::aws:policy/AmazonEC2FullAccess"
 }
 
 resource "aws_iam_role_policy_attachment" "beanstalk_ec2_policy_attachment-2" {
   role       = aws_iam_role.beanstalk_ec2_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AWSElasticBeanstalkCustomPlatformforEC2Role"
-}
-
-resource "aws_iam_role_policy_attachment" "beanstalk_ec2_policy_attachment-3" {
-  role = aws_iam_role.beanstalk_ec2_role.name
-  #policy_arn = aws_iam_policy.beanstalk_ec2_policy.arn
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2FullAccess"
+  policy_arn = aws_iam_policy.beanstalk_ec2_policy.arn
+  #policy_arn = "arn:aws:iam::aws:policy/AWSElasticBeanstalkCustomPlatformforEC2Role"
 }
 
 resource "aws_iam_role_policy_attachment" "beanstalk_service_policy_attachement" {
@@ -364,29 +352,11 @@ resource "aws_elastic_beanstalk_environment" "prod" {
   }
 
 
-  # setting {
-  #   namespace = "aws:elbv2:listener:5000"
-  #   name      = "DefaultProcess"
-  #   value     = "default"
-  # }
-
   setting {
     namespace = "aws:elbv2:listener:80"
     name      = "ListenerEnabled"
     value     = true
   }
-
-  # setting {
-  #   namespace = "aws:elbv2:listener:5000"
-  #   name      = "ListenerEnabled"
-  #   value     = true
-  # }
-
-  # setting {
-  #   namespace = "aws:elbv2:listener:5000"
-  #   name      = "Protocol"
-  #   value     = "HTTP"
-  # }
 
   setting {
     namespace = "aws:elbv2:listener:80"
@@ -400,12 +370,6 @@ resource "aws_elastic_beanstalk_environment" "prod" {
   #   value     = var.s3_logs_bucket_name
   # }
 
-  setting {
-    namespace = "aws:elbv2:loadbalancer"
-    name      = "IdleTimeout"
-    value     = 180
-  }
-
   # setting {
   #   namespace = "aws:elbv2:loadbalancer"
   #   name      = "AccessLogsS3Enabled"
@@ -417,6 +381,12 @@ resource "aws_elastic_beanstalk_environment" "prod" {
   #   name      = "AccessLogsS3Prefix"
   #   value     = "bid_env-"
   # }
+
+  setting {
+    namespace = "aws:elbv2:loadbalancer"
+    name      = "IdleTimeout"
+    value     = 180
+  }
 
   setting {
     namespace = "aws:elasticbeanstalk:healthreporting:system"
