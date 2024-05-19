@@ -1,9 +1,3 @@
-#get the aws current region
-data "aws_region" "current" {}
-
-#get the aws account id
-data "aws_caller_identity" "current" {}
-
 #1 create vpc 
 module "vpc" {
   source = "./modules/vpc"
@@ -32,14 +26,15 @@ module "beanstalk" {
   elb_subnet_ids   = module.vpc.beanstalk_lb_subnet_lists
   beanstalk_name   = var.beanstalk_env_name
   application_name = module.dotnet_app.app_name
+  version_label    = module.app_version.beanstalk_app_version_label
 
 }
 
-#4 upload .net function to beanstalk bucket
+#4 upload .net zipped-app to beanstalk bucket
 module "upload_dot_net" {
   source       = "./modules/file_upload"
-  file_path    = var.app_file_upload
-  s3_bucket_id = "elasticbeanstalk-${data.aws_region.current.name}-${data.aws_caller_identity.current.account_id}"
+  file_path    = var.app_file_upload #"./s3_uploads/Jokes.zip" 
+  s3_bucket_id = local.beanstalk_bucket_id
   key          = var.app_key
 }
 
@@ -48,7 +43,6 @@ module "app_version" {
   source           = "./modules/app_version"
   application      = module.dotnet_app.app_name
   app_key          = var.app_key
-  bucket_id        = "elasticbeanstalk-${data.aws_region.current.name}-${data.aws_caller_identity.current.account_id}"
-  app_version_name = "v2"
+  bucket_id        = local.beanstalk_bucket_id
+  app_version_name = "${var.app_version}-${timestamp()}"
 }
-

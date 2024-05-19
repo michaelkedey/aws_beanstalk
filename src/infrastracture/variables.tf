@@ -10,13 +10,17 @@ variable "lambda_key" {
 
 
 variable "app_key" {
-  default = "LambdaWebApp2.zip"
+  default = "dotnet-app/v1/app.zip"
   type    = string
+}
+
+variable "app_version" {
+  default = "V"
 }
 
 variable "app_name" {
   type    = string
-  default = "LambdaWebApp2"
+  default = ".net_app"
 
 }
 

@@ -140,3 +140,7 @@ variable "min_instance_in_service" {
   default = 2
   type    = number
 }
+
+variable "version_label" {
+  type = string
+}

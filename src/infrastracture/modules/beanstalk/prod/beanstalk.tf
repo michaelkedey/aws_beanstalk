@@ -527,6 +527,6 @@ resource "aws_elastic_beanstalk_environment" "prod" {
   }
 
   #Reference existing S3 version
-  #version_label = var.app_version_name
+  version_label = var.version_label
 
 }
