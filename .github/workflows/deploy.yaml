@@ -31,7 +31,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./src/infrastructure
+        working-directory: src/infrastracture
 
     steps:
       - name: Checkout
@@ -78,7 +78,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./src/infrastructure
+        working-directory: src/infrastracture
 
     steps:
       - name: Checkout Repo
@@ -125,7 +125,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./src/infrastructure
+        working-directory: src/infrastracture
 
     steps:
       - name: Checkout Repo
