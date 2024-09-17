@@ -1,4 +1,4 @@
-name: Terraform_dev
+name: Terraform_deploy
 
 on:
 #   push:
@@ -31,7 +31,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: src/infrastructure
+        working-directory: src/infrastracture
 
     steps:
       - name: Checkout
@@ -78,7 +78,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: src/infrastructure
+        working-directory: src/infrastracture
 
     steps:
       - name: Checkout Repo
@@ -117,7 +117,7 @@ jobs:
     name: "prod"
     runs-on: ubuntu-latest
     needs: dev
-    
+
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
@@ -125,7 +125,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: src/infrastructure
+        working-directory: src/infrastracture
 
     steps:
       - name: Checkout Repo
