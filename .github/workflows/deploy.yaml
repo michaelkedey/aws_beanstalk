@@ -37,8 +37,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: pre-init file
-        run: ./format_validate_all.sh
+      #- name: pre-init file
+      #  run: ./format_validate_all.sh
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
@@ -84,8 +84,8 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v2
 
-      - name: pre-init file
-        run: bash ./format_validate_all.sh
+      #- name: pre-init file
+      #  run: bash ./format_validate_all.sh
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
@@ -131,8 +131,8 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v2
 
-      - name: pre-init file
-        run: bash ./format_validate_all.sh
+      #- name: pre-init file
+      #  run: bash ./format_validate_all.sh
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
