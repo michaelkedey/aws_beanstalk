@@ -1,0 +1,119 @@
+name: s3 Upload
+
+on:
+  push:
+    branches:
+      - main 
+    paths:
+      - 'src/app_versions/**'
+
+jobs:
+  dev:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Upload zip file to S3
+        uses: aws-actions/amazon-s3-upload@v2
+        with:
+          bucket-name: elasticbeanstalk-${{ env.AWS_REGION }}-${{ secrets.DEV_ACCOUNT_ID }}
+          object-key: app-${{ github.sha }}.zip
+          file-path: src/app_versions/app-${{ github.sha }}.zip
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.DEV_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.DEV_AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCOUNT_ID: ${{ secrets.DEV_ACCOUNT_ID }}
+          AWS_REGION: us-east-1
+
+      - name: Create Elastic Beanstalk Application Version
+        id: create_app_version
+        uses: aws-actions/aws-elastic-beanstalk-application-version@v1
+        with:
+          application-name: LambdaWebApp2
+          version-label: v-$(date +%Y-%m-%d-%H-%M-%S)
+          source-bundle: s3://elasticbeanstalk-${{ env.AWS_REGION }}-${{ secrets.DEV_ACCOUNT_ID }}/app-${{ github.sha }}.zip
+          region: us-east-1
+        
+      - name: Deploy Application Version to Elastic Beanstalk
+        uses: aws-actions/aws-elastic-beanstalk-deploy@v1
+        with:
+          application-name: LambdaWebApp2
+          environment-name: my-dev-beanstalk2
+          version-label: ${{ steps.create_app_version.outputs.version-label }}
+          region: us-east-1
+
+  staging:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Upload zip file to S3
+        uses: aws-actions/amazon-s3-upload@v2
+        with:
+          bucket-name: elasticbeanstalk-${{ env.AWS_REGION }}-${{ secrets.STAGING_ACCOUNT_ID }}
+          object-key: app-${{ github.sha }}.zip
+          file-path: src/app_versions/app-${{ github.sha }}.zip
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_STAGING }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_STAGING }}
+          AWS_ACCOUNT_ID: ${{ secrets.STAGING_ACCOUNT_ID }}
+          AWS_REGION: us-east-1
+
+      - name: Create Elastic Beanstalk Application Version
+        id: create_app_version
+        uses: aws-actions/aws-elastic-beanstalk-application-version@v1
+        with:
+          application-name: LambdaWebApp2
+          version-label: v-$(date +%Y-%m-%d-%H-%M-%S)
+          source-bundle: s3://elasticbeanstalk-${{ env.AWS_REGION }}-${{ secrets.STAGING_ACCOUNT_ID }}/app-${{ github.sha }}.zip
+          region: us-east-1
+        
+      - name: Deploy Application Version to Elastic Beanstalk
+        uses: aws-actions/aws-elastic-beanstalk-deploy@v1
+        with:
+          application-name: LambdaWebApp2
+          environment-name: my-dev-beanstalk2
+          version-label: ${{ steps.create_app_version.outputs.version-label }}
+          region: us-east-1
+
+  prod:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Upload zip file to S3
+        uses: aws-actions/amazon-s3-upload@v2
+        with:
+          bucket-name: elasticbeanstalk-${{ env.AWS_REGION }}-${{ secrets.PROD_ACCOUNT_ID }}
+          object-key: app-${{ github.sha }}.zip
+          file-path: src/app_versions/app-${{ github.sha }}.zip
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+          AWS_ACCOUNT_ID: ${{ secrets.PROD_ACCOUNT_ID }}
+          AWS_REGION: us-east-1
+
+      - name: Create Elastic Beanstalk Application Version
+        id: create_app_version
+        uses: aws-actions/aws-elastic-beanstalk-application-version@v1
+        with:
+          application-name: LambdaWebApp2
+          version-label: v-$(date +%Y-%m-%d-%H-%M-%S)
+          source-bundle: s3://elasticbeanstalk-${{ env.AWS_REGION }}-${{ secrets.PROD_ACCOUNT_ID }}/app-${{ github.sha }}.zip
+          region: us-east-1
+        
+      - name: Deploy Application Version to Elastic Beanstalk
+        uses: aws-actions/aws-elastic-beanstalk-deploy@v1
+        with:
+          application-name: LambdaWebApp2
+          environment-name: my-dev-beanstalk2
+          version-label: ${{ steps.create_app_version.outputs.version-label }}
+          region: us-east-1
+
+
