@@ -4,8 +4,6 @@
 
 This repository contains Terraform configurations to provision AWS infrastructure consisting of Elastic Beanstalk environment, a Lambda function for automatic deployments, Route 53 for DNS management and an S3 bucket for object storage.
 
-![architecture](./Manulife_Auto_IaC_Design_Architecture.png)
-
 ## To run this infrustracture locally configure the prerequisite:
 
 ### Prerequisites
