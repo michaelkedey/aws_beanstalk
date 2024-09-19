@@ -9,6 +9,8 @@ root_vol_size = 30
 beanstalk_env_name = "my-staging-beanstalk10"
 instance_type = "t3.micro"
 version_name = "version0.0.1"
+app_file_path = "./s3_uploads/dotnet-linux.zip"
+app_key = "dotnet-linux.zip"
 
 #backend
 # bucket = "hadari-africa-staging-bucket"

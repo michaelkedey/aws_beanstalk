@@ -240,6 +240,16 @@
           ],
           "Effect": "Allow",
           "Resource": "*"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "ec2:CreateVpc",
+            "ec2:CreateSubnet",
+            "ec2:DescribeVpcs",
+            "ec2:DescribeSubnets"
+          ],
+          "Resource": "*"
         }
       ]
 }

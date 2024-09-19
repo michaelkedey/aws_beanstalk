@@ -9,6 +9,8 @@ root_vol_size = 30
 beanstalk_env_name = "my-prod-beanstalk10"
 instance_type = "m5.large"
 version_name = "version0.0.1"
+app_file_path = "./s3_uploads/dotnet-linux.zip"
+app_key = "dotnet-linux.zip"
 
 #backend
 # bucket = "hadariafricaprod-bucket"
