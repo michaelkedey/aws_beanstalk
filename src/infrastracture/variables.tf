@@ -1,17 +1,10 @@
-variable "bucket_name" {
-  type = string
+# variable "bucket_name" {
+#   type = string
 
-}
-
-variable "lambda_key" {
-  default = "auto_deploy_function.py.zip"
-  type    = string
-}
-
+# }
 
 variable "app_key" {
-  default = "dotnet-app/v1/app.zip"
-  type    = string
+  type = string
 }
 
 variable "app_version" {
@@ -72,8 +65,7 @@ variable "lambda_file_upload" {
 
 }
 
-variable "app_file_upload" {
-  default = "./s3_uploads/LambdaWebApp2.zip"
-  type    = string
+variable "app_file_path" {
+  type = string
 
 }

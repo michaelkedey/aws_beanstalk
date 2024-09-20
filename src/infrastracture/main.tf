@@ -21,9 +21,9 @@ module "beanstalk" {
   root_volume_type = var.root_vol_type
   vpc_id           = module.vpc.vpc_id
   subnet_ids       = module.vpc.beanstalk_subnet_lists
+  elb_subnet_ids   = module.vpc.beanstalk_lb_subnet_lists
   #s3_logs_bucket_id   = "elasticbeanstalk-${data.aws_region.current.name}-${data.aws_caller_identity.current.account_id}"
   #s3_logs_bucket_name = "elasticbeanstalk-${data.aws_region.current.name}-${data.aws_caller_identity.current.account_id}"
-  elb_subnet_ids   = module.vpc.beanstalk_lb_subnet_lists
   beanstalk_name   = var.beanstalk_env_name
   application_name = module.dotnet_app.app_name
   version_label    = module.app_version.beanstalk_app_version_label
@@ -33,7 +33,7 @@ module "beanstalk" {
 #4 upload .net zipped-app to beanstalk bucket
 module "upload_dot_net" {
   source       = "./modules/file_upload"
-  file_path    = var.app_file_upload #"./s3_uploads/Jokes.zip" 
+  file_path    = var.app_file_path
   s3_bucket_id = local.beanstalk_bucket_id
   key          = var.app_key
 }
@@ -45,4 +45,8 @@ module "app_version" {
   app_key          = var.app_key
   bucket_id        = local.beanstalk_bucket_id
   app_version_name = "${var.app_version}-${timestamp()}"
+  depends_on = [
+    module.dotnet_app,
+    module.upload_dot_net
+  ]
 }

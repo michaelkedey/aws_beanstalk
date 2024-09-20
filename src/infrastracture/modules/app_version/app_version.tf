@@ -4,6 +4,10 @@ resource "aws_elastic_beanstalk_application_version" "bid_app_version" {
   name        = var.app_version_name
   key         = var.app_key
 
+   lifecycle {
+    create_before_destroy = true
+  }
+
 }
 
 

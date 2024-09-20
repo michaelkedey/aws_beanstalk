@@ -320,9 +320,6 @@ resource "aws_elastic_beanstalk_environment" "prod" {
     value     = "/"
   }
 
-  lifecycle {
-    create_before_destroy = true
-  }
 
   #load_balancer
 
@@ -344,13 +341,11 @@ resource "aws_elastic_beanstalk_environment" "prod" {
     value     = "HTTP"
   }
 
-
   setting {
     namespace = "aws:elbv2:listener:80"
     name      = "DefaultProcess"
     value     = "default"
   }
-
 
   setting {
     namespace = "aws:elbv2:listener:80"
@@ -363,24 +358,6 @@ resource "aws_elastic_beanstalk_environment" "prod" {
     name      = "Protocol"
     value     = "HTTP"
   }
-
-  # setting {
-  #   namespace = "aws:elbv2:loadbalancer"
-  #   name      = "AccessLogsS3Bucket"
-  #   value     = var.s3_logs_bucket_name
-  # }
-
-  # setting {
-  #   namespace = "aws:elbv2:loadbalancer"
-  #   name      = "AccessLogsS3Enabled"
-  #   value     = true
-  # }
-
-  # setting {
-  #   namespace = "aws:elbv2:loadbalancer"
-  #   name      = "AccessLogsS3Prefix"
-  #   value     = "bid_env-"
-  # }
 
   setting {
     namespace = "aws:elbv2:loadbalancer"
@@ -528,5 +505,9 @@ resource "aws_elastic_beanstalk_environment" "prod" {
 
   #Reference existing S3 version
   version_label = var.version_label
+
+    lifecycle {
+    create_before_destroy = true
+  }
 
 }

@@ -157,6 +157,69 @@ The sync causes an upload into the S3 buckets which triggers the lambda if the o
 
 Three `destroy` yaml files are contained in the .github/workflows directory. These include `dev_destroy.yaml`, `staging_destroy.yaml` and `prod_destroy.yaml`files. They require manual approval to trigger the destroy workflow for the respective deployment levels.  
 
+## Directory Structure
+```plaintext
+$ tree
+.
+|-- Manulife_Auto_IaC_Design_Architecture.png
+|-- README.md
+`-- src
+    |-- app_versions
+    |   `-- LambdaWebApp2.zip
+    `-- infrastracture       
+        |-- env
+        |   |-- dev
+        |   |   `-- backend.tfvars
+        |   |-- prod
+        |   |   `-- backend.tfvars
+        |   `-- staging
+        |       `-- backend.tfvars
+        |-- format_validate_all.sh
+        |-- locals.tf
+        |-- main.tf
+        |-- modules
+        |   |-- app
+        |   |   |-- app.tf
+        |   |   |-- outputs.tf
+        |   |   `-- variables.tf
+        |   |-- app_version
+        |   |   |-- app_version.tf
+        |   |   |-- outputs.tf
+        |   |   |-- store.tf
+        |   |   `-- variables.tf
+        |   |-- beanstalk
+        |   |   `-- prod
+        |   |       |-- beanstalk-ec2-policy.json
+        |   |       |-- beanstalk-service-policy.json
+        |   |       |-- beanstalk.tf
+        |   |       |-- outputs.tf
+        |   |       `-- variables.tf
+        |   |-- dir_upload
+        |   |   |-- uploads.tf
+        |   |   `-- variables.tf
+        |   |-- file_upload
+        |   |   |-- outputs.tf
+        |   |   |-- uploads.tf
+        |   |   `-- variables.tf
+        |   |-- route53
+        |   |   |-- output.tf
+        |   |   |-- route.tf
+        |   |   `-- variables.tf
+        |   `-- vpc
+        |       |-- outputs.tf
+        |       |-- providers.tf
+        |       |-- store.tf
+        |       |-- variables.tf
+        |       `-- vpc.tf
+        |-- outputs.tf
+        |-- providers.tf
+        |-- s3_uploads
+        |   |-- dotnet-linux.zip
+        |   `-- dotnet-linux2.zip
+        `-- variables.tf
+
+17 directories, 39 files
+```
 
 ## Notes
 
