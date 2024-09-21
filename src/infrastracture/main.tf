@@ -38,8 +38,8 @@ module "upload_dot_net" {
   key          = var.app_key
 }
 
-#4 upload .net zipped-app to beanstalk bucket
-module "upload_dot_net" {
+#4 upload hadari.txt zipped-app to beanstalk bucket
+module "upload_hadari.txt" {
   source       = "./modules/file_upload"
   file_path    = "./s3_uploads/hadari.txt"
   s3_bucket_id = local.beanstalk_bucket_id
