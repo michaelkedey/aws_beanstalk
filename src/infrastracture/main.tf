@@ -38,6 +38,14 @@ module "upload_dot_net" {
   key          = var.app_key
 }
 
+#4 upload .net zipped-app to beanstalk bucket
+module "upload_dot_net" {
+  source       = "./modules/file_upload"
+  file_path    = "./s3_uploads/hadari.txt"
+  s3_bucket_id = local.beanstalk_bucket_id
+  key          = "hadari.txt"
+}
+
 #5 create app version from zip
 module "app_version" {
   source           = "./modules/app_version"
